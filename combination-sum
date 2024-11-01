@@ -1,0 +1,23 @@
+class Solution:
+    def combinationSum(self, candidates, target):
+        result = []
+        
+        def backtrack(remaining, current_combination, start):
+            if remaining == 0:
+                # If we hit the target, add the current combination to the result
+                result.append(list(current_combination))
+                return
+            elif remaining < 0:
+                # If the sum exceeds the target, stop exploring this path
+                return
+            
+            for i in range(start, len(candidates)):
+                # Include the candidate
+                current_combination.append(candidates[i])
+                # Continue to search with the reduced target (remaining - candidates[i])
+                backtrack(remaining - candidates[i], current_combination, i)  # 'i' is used to reuse the same element
+                # Backtrack: Remove the last element added and try the next candidate
+                current_combination.pop()
+        
+        backtrack(target, [], 0)
+        return result
