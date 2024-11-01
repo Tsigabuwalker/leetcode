@@ -1,0 +1,60 @@
+class Solution:
+    def find_first(self, nums, target):
+        left, right = 0, len(nums) - 1
+        first_position = -1
+        
+        while left <= right:
+            mid = left + (right - left) // 2
+            
+            if nums[mid] == target:
+                first_position = mid
+                right = mid - 1  # Continue searching in the left half
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+                
+        return first_position
+
+    def find_last(self, nums, target):
+        left, right = 0, len(nums) - 1
+        last_position = -1
+        
+        while left <= right:
+            mid = left + (right - left) // 2
+            
+            if nums[mid] == target:
+                last_position = mid
+                left = mid + 1  # Continue searching in the right half
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+                
+        return last_position
+
+    def searchRange(self, nums, target):  # Change here
+        start = self.find_first(nums, target)
+        end = self.find_last(nums, target)
+        return [start, end]
+
+# Example usage
+solution = Solution()
+
+# Test Case 1
+nums1 = [5, 7, 7, 8, 8, 10]
+target1 = 8
+output1 = solution.searchRange(nums1, target1)
+print(output1)  # Output: [3, 4]
+
+# Test Case 2
+nums2 = [5, 7, 7, 8, 8, 10]
+target2 = 6
+output2 = solution.searchRange(nums2, target2)
+print(output2)  # Output: [-1, -1]
+
+# Test Case 3
+nums3 = []
+target3 = 0
+output3 = solution.searchRange(nums3, target3)
+print(output3)  # Output: [-1, -1]
