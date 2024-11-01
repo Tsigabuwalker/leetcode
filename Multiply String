@@ -1,0 +1,30 @@
+class Solution:
+    def multiply(self, num1: str, num2: str) -> str:
+        # If either number is "0", the result is "0"
+        if num1 == "0" or num2 == "0":
+            return "0"
+        
+        # Initialize a list to hold the result
+        result = [0] * (len(num1) + len(num2))
+        
+        # Reverse iterate through num1 and num2
+        for i in range(len(num1) - 1, -1, -1):
+            for j in range(len(num2) - 1, -1, -1):
+                # Multiply the current digits
+                product = (ord(num1[i]) - ord('0')) * (ord(num2[j]) - ord('0'))
+                # Index in the result array
+                p1 = i + j
+                p2 = i + j + 1
+                
+                # Add product to the corresponding position
+                total = product + result[p2]
+                result[p2] = total % 10  # Remainder goes to the current position
+                result[p1] += total // 10  # Carry goes to the next position
+        
+        # Convert result list to string and remove leading zeros
+        result_str = ''.join(map(str, result)).lstrip('0')
+        
+        return result_str if result_str else "0"
+
+# Example usage:
+solution = Solution()
